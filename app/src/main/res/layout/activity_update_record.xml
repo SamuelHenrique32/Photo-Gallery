@@ -6,52 +6,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context="info.codestart.androidsqlitedatabase.AddRecordActivity">
+    tools:context="info.codestart.androidsqlitedatabase.info.codestart.trabalho01.AddRecordActivity">
 
 
     <TextView
         android:id="@+id/titleUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update user"
-        android:textAlignment="center" />
+        android:text="Atualizar Foto"
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
 
     <EditText
-        android:id="@+id/userNameUpdate"
+        android:id="@+id/photoTitleUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Name" />
+        android:hint="Título" />
 
     <EditText
-        android:id="@+id/userAgeUpdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:hint="Age" />
-
-    <EditText
-        android:id="@+id/userOccupationUpdate"
+        android:id="@+id/photoDescriptionUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Occupation" />
-
-    <EditText
-        android:id="@+id/userProfileImageLinkUpdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textUri"
-        android:hint="Image profile url" />
+        android:hint="Descrição" />
 
     <Button
         android:id="@+id/updateUserButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update User"/>
+        android:text="Atualizar"/>
 
 </LinearLayout>

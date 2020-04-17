@@ -1,10 +1,10 @@
-package info.codestart.androidsqlitedatabase.model;
+package info.codestart.trabalho01.model;
 
 /**
  * Created by Ronsoft on 11/13/2017.
  */
 
-public class Person {
+public class Photo {
 
     private long id;
     private String name;
@@ -12,10 +12,10 @@ public class Person {
     private String occupation;
     private String image;
 
-    public Person() {
+    public Photo() {
     }
 
-    public Person(String name, String age, String occupation, String image) {
+    public Photo(String name, String age, String occupation, String image) {
         this.name = name;
         this.age = age;
         this.occupation = occupation;

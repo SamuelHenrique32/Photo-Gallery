@@ -1,4 +1,4 @@
-package info.codestart.androidsqlitedatabase;
+package info.codestart.trabalho01;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

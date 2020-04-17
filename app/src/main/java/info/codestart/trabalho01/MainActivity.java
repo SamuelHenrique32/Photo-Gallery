@@ -1,4 +1,5 @@
-package info.codestart.androidsqlitedatabase;
+// TODO rename
+package info.codestart.trabalho01;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,14 +14,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
-import info.codestart.androidsqlitedatabase.Utils.PersonAdapter;
-import info.codestart.androidsqlitedatabase.Utils.PersonDBHelper;
+// TODO rename
+import info.codestart.androidsqlitedatabase.R;
+import info.codestart.trabalho01.Utils.PersonAdapter;
+import info.codestart.trabalho01.Utils.PersonDBHelper;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
     private PersonDBHelper dbHelper;
     private PersonAdapter adapter;
     private String filter = "";
@@ -30,24 +32,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
 
-        //initialize the variables
-        mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
-        mRecyclerView.setHasFixedSize(true);
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
 
         //populate recyclerview
         populaterecyclerView(filter);
-
-
     }
 
     private void populaterecyclerView(String filter){
         dbHelper = new PersonDBHelper(this);
-        adapter = new PersonAdapter(dbHelper.peopleList(filter), this, mRecyclerView);
-        mRecyclerView.setAdapter(adapter);
+        adapter = new PersonAdapter(dbHelper.peopleList(filter), this, recyclerView);
+        recyclerView.setAdapter(adapter);
 
     }
 
@@ -56,29 +54,6 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.home_menu, menu);
 
-        MenuItem item = menu.findItem(R.id.filterSpinner);
-        Spinner spinner = (Spinner) MenuItemCompat.getActionView(item);
-
-        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.filterOptions, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String filter = parent.getSelectedItem().toString();
-                populaterecyclerView(filter);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                populaterecyclerView(filter);
-            }
-        });
-
-
-        spinner.setAdapter(adapter);
         return true;
     }
 

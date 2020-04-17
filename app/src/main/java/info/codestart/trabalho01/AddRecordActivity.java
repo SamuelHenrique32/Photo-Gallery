@@ -1,4 +1,4 @@
-package info.codestart.androidsqlitedatabase;
+package info.codestart.trabalho01;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import info.codestart.androidsqlitedatabase.Utils.PersonDBHelper;
-import info.codestart.androidsqlitedatabase.model.Person;
+import info.codestart.androidsqlitedatabase.R;
+import info.codestart.trabalho01.Utils.PersonDBHelper;
+import info.codestart.trabalho01.model.Photo;
 
 public class AddRecordActivity extends AppCompatActivity {
 
@@ -27,10 +28,9 @@ public class AddRecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_record);
 
         //init
-        mNameEditText = (EditText)findViewById(R.id.userName);
-        mAgeEditText = (EditText)findViewById(R.id.userAge);
-        mOccupationEditText = (EditText)findViewById(R.id.userOccupation);
-        mImageEditText = (EditText)findViewById(R.id.userProfileImageLink);
+        mNameEditText = (EditText)findViewById(R.id.photoTitle);
+        mAgeEditText = (EditText)findViewById(R.id.photoDescription);
+        mOccupationEditText = (EditText)findViewById(R.id.photoDescription);
         mAddBtn = (Button)findViewById(R.id.addNewUserButton);
 
         //listen to add button click
@@ -48,7 +48,7 @@ public class AddRecordActivity extends AppCompatActivity {
         String name = mNameEditText.getText().toString().trim();
         String age = mAgeEditText.getText().toString().trim();
         String occupation = mOccupationEditText.getText().toString().trim();
-        String image = mImageEditText.getText().toString().trim();
+        //String image = mImageEditText.getText().toString().trim();
         dbHelper = new PersonDBHelper(this);
 
         if(name.isEmpty()){
@@ -56,24 +56,24 @@ public class AddRecordActivity extends AppCompatActivity {
             Toast.makeText(this, "You must enter a name", Toast.LENGTH_SHORT).show();
         }
 
-        if(age.isEmpty()){
-            //error name is empty
-            Toast.makeText(this, "You must enter an age", Toast.LENGTH_SHORT).show();
-        }
+//        if(age.isEmpty()){
+//            //error name is empty
+//            Toast.makeText(this, "You must enter an age", Toast.LENGTH_SHORT).show();
+//        }
 
         if(occupation.isEmpty()){
             //error name is empty
             Toast.makeText(this, "You must enter an occupation", Toast.LENGTH_SHORT).show();
         }
 
-        if(image.isEmpty()){
+        /*if(image.isEmpty()){
             //error name is empty
             Toast.makeText(this, "You must enter an image link", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         //create new person
-        Person person = new Person(name, age, occupation, image);
-        dbHelper.saveNewPerson(person);
+        Photo photo = new Photo(name, occupation, occupation, "aaa");
+        dbHelper.saveNewPerson(photo);
 
         //finally redirect back home
         // NOTE you can implement an sqlite callback then redirect on success delete

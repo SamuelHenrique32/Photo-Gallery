@@ -1,4 +1,4 @@
-package info.codestart.androidsqlitedatabase.Utils;
+package info.codestart.trabalho01.Utils;
 
 
 import android.app.AlertDialog;
@@ -17,11 +17,11 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import info.codestart.androidsqlitedatabase.R;
-import info.codestart.androidsqlitedatabase.UpdateRecordActivity;
-import info.codestart.androidsqlitedatabase.model.Person;
+import info.codestart.trabalho01.UpdateRecordActivity;
+import info.codestart.trabalho01.model.Photo;
 
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder> {
-    private List<Person> mPeopleList;
+    private List<Photo> mPeopleList;
     private Context mContext;
     private RecyclerView mRecyclerV;
 
@@ -42,9 +42,8 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
         public ViewHolder(View v) {
             super(v);
             layout = v;
-            personNameTxtV = (TextView) v.findViewById(R.id.name);
-            personAgeTxtV = (TextView) v.findViewById(R.id.age);
-            personOccupationTxtV = (TextView) v.findViewById(R.id.occupation);
+            personNameTxtV = (TextView) v.findViewById(R.id.title);
+            personOccupationTxtV = (TextView) v.findViewById(R.id.description);
             personImageImgV = (ImageView) v.findViewById(R.id.image);
 
 
@@ -53,8 +52,8 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
         }
     }
 
-    public void add(int position, Person person) {
-        mPeopleList.add(position, person);
+    public void add(int position, Photo photo) {
+        mPeopleList.add(position, photo);
         notifyItemInserted(position);
     }
 
@@ -66,7 +65,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
 
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public PersonAdapter(List<Person> myDataset, Context context, RecyclerView recyclerView) {
+    public PersonAdapter(List<Photo> myDataset, Context context, RecyclerView recyclerView) {
         mPeopleList = myDataset;
         mContext = context;
         mRecyclerV = recyclerView;
@@ -92,11 +91,11 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        final Person person = mPeopleList.get(position);
-        holder.personNameTxtV.setText("Name: " + person.getName());
-        holder.personAgeTxtV.setText("Age: " + person.getAge());
-        holder.personOccupationTxtV.setText("Occupation: " + person.getOccupation());
-        Picasso.with(mContext).load(person.getImage()).placeholder(R.mipmap.ic_launcher).into(holder.personImageImgV);
+        final Photo photo = mPeopleList.get(position);
+        holder.personNameTxtV.setText("Título: " + photo.getName());
+//        holder.personAgeTxtV.setText("Age: " + photo.getAge());
+        holder.personOccupationTxtV.setText("Descrição: " + photo.getAge());
+        Picasso.with(mContext).load(photo.getImage()).placeholder(R.mipmap.ic_launcher).into(holder.personImageImgV);
 
         //listen to single view layout click
         holder.layout.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +109,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
                     public void onClick(DialogInterface dialog, int which) {
 
                     //go to update activity
-                        goToUpdateActivity(person.getId());
+                        goToUpdateActivity(photo.getId());
 
                     }
                 });
@@ -118,7 +117,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         PersonDBHelper dbHelper = new PersonDBHelper(mContext);
-                        dbHelper.deletePersonRecord(person.getId(), mContext);
+                        dbHelper.deletePersonRecord(photo.getId(), mContext);
 
                         mPeopleList.remove(position);
                         mRecyclerV.removeViewAt(position);

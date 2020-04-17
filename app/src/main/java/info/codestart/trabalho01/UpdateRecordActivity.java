@@ -1,4 +1,4 @@
-package info.codestart.androidsqlitedatabase;
+package info.codestart.trabalho01;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import info.codestart.androidsqlitedatabase.Utils.PersonDBHelper;
-import info.codestart.androidsqlitedatabase.model.Person;
+import info.codestart.androidsqlitedatabase.R;
+import info.codestart.trabalho01.Utils.PersonDBHelper;
+import info.codestart.trabalho01.model.Photo;
 
 public class UpdateRecordActivity extends AppCompatActivity {
 
@@ -28,10 +29,8 @@ public class UpdateRecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update_record);
 
         //init
-        mNameEditText = (EditText)findViewById(R.id.userNameUpdate);
-        mAgeEditText = (EditText)findViewById(R.id.userAgeUpdate);
-        mOccupationEditText = (EditText)findViewById(R.id.userOccupationUpdate);
-        mImageEditText = (EditText)findViewById(R.id.userProfileImageLinkUpdate);
+        mNameEditText = (EditText)findViewById(R.id.photoTitleUpdate);
+        mAgeEditText = (EditText)findViewById(R.id.photoDescriptionUpdate);
         mUpdateBtn = (Button)findViewById(R.id.updateUserButton);
 
         dbHelper = new PersonDBHelper(this);
@@ -44,12 +43,12 @@ public class UpdateRecordActivity extends AppCompatActivity {
         }
 
         /***populate user data before update***/
-        Person queriedPerson = dbHelper.getPerson(receivedPersonId);
+        Photo queriedPhoto = dbHelper.getPerson(receivedPersonId);
         //set field to this user data
-        mNameEditText.setText(queriedPerson.getName());
-        mAgeEditText.setText(queriedPerson.getAge());
-        mOccupationEditText.setText(queriedPerson.getOccupation());
-        mImageEditText.setText(queriedPerson.getImage());
+        mNameEditText.setText(queriedPhoto.getName());
+        mAgeEditText.setText(queriedPhoto.getOccupation());
+//        mOccupationEditText.setText(queriedPhoto.getAge());
+//        mImageEditText.setText(queriedPhoto.getImage());
 
 
 
@@ -71,8 +70,8 @@ public class UpdateRecordActivity extends AppCompatActivity {
     private void updatePerson(){
         String name = mNameEditText.getText().toString().trim();
         String age = mAgeEditText.getText().toString().trim();
-        String occupation = mOccupationEditText.getText().toString().trim();
-        String image = mImageEditText.getText().toString().trim();
+//        String occupation = mOccupationEditText.getText().toString().trim();
+//        String image = mImageEditText.getText().toString().trim();
 
 
         if(name.isEmpty()){
@@ -85,21 +84,21 @@ public class UpdateRecordActivity extends AppCompatActivity {
             Toast.makeText(this, "You must enter an age", Toast.LENGTH_SHORT).show();
         }
 
-        if(occupation.isEmpty()){
+        /*if(occupation.isEmpty()){
             //error name is empty
             Toast.makeText(this, "You must enter an occupation", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
-        if(image.isEmpty()){
+        /*if(image.isEmpty()){
             //error name is empty
             Toast.makeText(this, "You must enter an image link", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         //create updated person
-        Person updatedPerson = new Person(name, age, occupation, image);
+        Photo updatedPhoto = new Photo(name, age, age, "image_url");
 
         //call dbhelper update
-        dbHelper.updatePersonRecord(receivedPersonId, this, updatedPerson);
+        dbHelper.updatePersonRecord(receivedPersonId, this, updatedPhoto);
 
         //finally redirect back home
         // NOTE you can implement an sqlite callback then redirect on success delete

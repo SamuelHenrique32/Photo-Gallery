@@ -1,4 +1,4 @@
-package info.codestart.androidsqlitedatabase.Utils;
+package info.codestart.trabalho01.Utils;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.widget.Toast;
 import java.util.LinkedList;
 import java.util.List;
 
-import info.codestart.androidsqlitedatabase.model.Person;
+import info.codestart.trabalho01.model.Photo;
 
 /**
  * Created by Ronsoft on 9/16/2017.
@@ -51,14 +51,14 @@ public class PersonDBHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
     /**create record**/
-    public void saveNewPerson(Person person) {
+    public void saveNewPerson(Photo photo) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_PERSON_NAME, person.getName());
-        values.put(COLUMN_PERSON_AGE, person.getAge());
-        values.put(COLUMN_PERSON_OCCUPATION, person.getOccupation());
-        values.put(COLUMN_PERSON_IMAGE, person.getImage());
+        values.put(COLUMN_PERSON_NAME, photo.getName());
+        values.put(COLUMN_PERSON_AGE, photo.getAge());
+        values.put(COLUMN_PERSON_OCCUPATION, photo.getOccupation());
+        values.put(COLUMN_PERSON_IMAGE, photo.getImage());
 
         // insert
         db.insert(TABLE_NAME,null, values);
@@ -66,7 +66,7 @@ public class PersonDBHelper extends SQLiteOpenHelper {
     }
 
     /**Query records, give options to filter results**/
-    public List<Person> peopleList(String filter) {
+    public List<Photo> peopleList(String filter) {
         String query;
         if(filter.equals("")){
             //regular query
@@ -76,47 +76,47 @@ public class PersonDBHelper extends SQLiteOpenHelper {
             query = "SELECT  * FROM " + TABLE_NAME + " ORDER BY "+ filter;
         }
 
-        List<Person> personLinkedList = new LinkedList<>();
+        List<Photo> photoLinkedList = new LinkedList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-        Person person;
+        Photo photo;
 
         if (cursor.moveToFirst()) {
             do {
-                person = new Person();
+                photo = new Photo();
 
-                person.setId(cursor.getLong(cursor.getColumnIndex(COLUMN_ID)));
-                person.setName(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_NAME)));
-                person.setAge(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_AGE)));
-                person.setOccupation(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_OCCUPATION)));
-                person.setImage(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_IMAGE)));
-                personLinkedList.add(person);
+                photo.setId(cursor.getLong(cursor.getColumnIndex(COLUMN_ID)));
+                photo.setName(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_NAME)));
+                photo.setAge(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_AGE)));
+                photo.setOccupation(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_OCCUPATION)));
+                photo.setImage(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_IMAGE)));
+                photoLinkedList.add(photo);
             } while (cursor.moveToNext());
         }
 
 
-        return personLinkedList;
+        return photoLinkedList;
     }
 
     /**Query only 1 record**/
-    public Person getPerson(long id){
+    public Photo getPerson(long id){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT  * FROM " + TABLE_NAME + " WHERE _id="+ id;
         Cursor cursor = db.rawQuery(query, null);
 
-        Person receivedPerson = new Person();
+        Photo receivedPhoto = new Photo();
         if(cursor.getCount() > 0) {
             cursor.moveToFirst();
 
-            receivedPerson.setName(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_NAME)));
-            receivedPerson.setAge(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_AGE)));
-            receivedPerson.setOccupation(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_OCCUPATION)));
-            receivedPerson.setImage(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_IMAGE)));
+            receivedPhoto.setName(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_NAME)));
+            receivedPhoto.setAge(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_AGE)));
+            receivedPhoto.setOccupation(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_OCCUPATION)));
+            receivedPhoto.setImage(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_IMAGE)));
         }
 
 
 
-        return receivedPerson;
+        return receivedPhoto;
 
 
     }
@@ -132,7 +132,7 @@ public class PersonDBHelper extends SQLiteOpenHelper {
     }
 
     /**update record**/
-    public void updatePersonRecord(long personId, Context context, Person updatedperson) {
+    public void updatePersonRecord(long personId, Context context, Photo updatedperson) {
         SQLiteDatabase db = this.getWritableDatabase();
         //you can use the constants above instead of typing the column names
         db.execSQL("UPDATE  "+TABLE_NAME+" SET name ='"+ updatedperson.getName() + "', age ='" + updatedperson.getAge()+ "', occupation ='"+ updatedperson.getOccupation() + "', image ='"+ updatedperson.getImage() + "'  WHERE _id='" + personId + "'");
