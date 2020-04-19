@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import info.codestart.androidsqlitedatabase.R;
+import info.codestart.trabalho01.R;
 import info.codestart.trabalho01.Utils.PersonDBHelper;
 import info.codestart.trabalho01.model.Photo;
 
@@ -72,7 +72,7 @@ public class AddRecordActivity extends AppCompatActivity {
         }*/
 
         //create new person
-        Photo photo = new Photo(name, occupation, occupation, "aaa");
+        Photo photo = new Photo(name, occupation, "aaa");
         dbHelper.saveNewPerson(photo);
 
         //finally redirect back home

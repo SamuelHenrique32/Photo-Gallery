@@ -1,6 +1,4 @@
 package info.codestart.trabalho01.Utils;
-
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,27 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
-
-import info.codestart.androidsqlitedatabase.R;
+import info.codestart.trabalho01.R;
 import info.codestart.trabalho01.UpdateRecordActivity;
 import info.codestart.trabalho01.model.Photo;
 
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder> {
-    private List<Photo> mPeopleList;
-    private Context mContext;
-    private RecyclerView mRecyclerV;
+    private List<Photo> photoList;
+    private Context currentContext;
+    private RecyclerView recyclerView;
 
-
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     public class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public TextView personNameTxtV;
+
+        public TextView photoTitleTxtView;
         public TextView personAgeTxtV;
         public TextView personOccupationTxtV;
         public ImageView personImageImgV;
@@ -42,7 +33,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
         public ViewHolder(View v) {
             super(v);
             layout = v;
-            personNameTxtV = (TextView) v.findViewById(R.id.title);
+            photoTitleTxtView = (TextView) v.findViewById(R.id.title);
             personOccupationTxtV = (TextView) v.findViewById(R.id.description);
             personImageImgV = (ImageView) v.findViewById(R.id.image);
 
@@ -53,12 +44,12 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
     }
 
     public void add(int position, Photo photo) {
-        mPeopleList.add(position, photo);
+        photoList.add(position, photo);
         notifyItemInserted(position);
     }
 
     public void remove(int position) {
-        mPeopleList.remove(position);
+        photoList.remove(position);
         notifyItemRemoved(position);
     }
 
@@ -66,9 +57,9 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public PersonAdapter(List<Photo> myDataset, Context context, RecyclerView recyclerView) {
-        mPeopleList = myDataset;
-        mContext = context;
-        mRecyclerV = recyclerView;
+        photoList = myDataset;
+        currentContext = context;
+        this.recyclerView = recyclerView;
     }
 
     // Create new views (invoked by the layout manager)
@@ -91,17 +82,17 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        final Photo photo = mPeopleList.get(position);
-        holder.personNameTxtV.setText("Título: " + photo.getName());
+        final Photo photo = photoList.get(position);
+        holder.photoTitleTxtView.setText("Título: " + photo.getTitle());
 //        holder.personAgeTxtV.setText("Age: " + photo.getAge());
-        holder.personOccupationTxtV.setText("Descrição: " + photo.getAge());
-        Picasso.with(mContext).load(photo.getImage()).placeholder(R.mipmap.ic_launcher).into(holder.personImageImgV);
+        holder.personOccupationTxtV.setText("Descrição: " + photo.getDescription());
+        Picasso.with(currentContext).load(photo.getImageUrl()).placeholder(R.mipmap.ic_launcher).into(holder.personImageImgV);
 
         //listen to single view layout click
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                AlertDialog.Builder builder = new AlertDialog.Builder(currentContext);
                 builder.setTitle("Choose option");
                 builder.setMessage("Update or delete user?");
                 builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
@@ -116,13 +107,13 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
                 builder.setNeutralButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        PersonDBHelper dbHelper = new PersonDBHelper(mContext);
-                        dbHelper.deletePersonRecord(photo.getId(), mContext);
+                        PersonDBHelper dbHelper = new PersonDBHelper(currentContext);
+                        dbHelper.deletePersonRecord(photo.getId(), currentContext);
 
-                        mPeopleList.remove(position);
-                        mRecyclerV.removeViewAt(position);
+                        photoList.remove(position);
+                        recyclerView.removeViewAt(position);
                         notifyItemRemoved(position);
-                        notifyItemRangeChanged(position, mPeopleList.size());
+                        notifyItemRangeChanged(position, photoList.size());
                         notifyDataSetChanged();
                     }
                 });
@@ -140,9 +131,9 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
     }
 
     private void goToUpdateActivity(long personId){
-        Intent goToUpdate = new Intent(mContext, UpdateRecordActivity.class);
+        Intent goToUpdate = new Intent(currentContext, UpdateRecordActivity.class);
         goToUpdate.putExtra("USER_ID", personId);
-        mContext.startActivity(goToUpdate);
+        currentContext.startActivity(goToUpdate);
     }
 
 
@@ -150,7 +141,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mPeopleList.size();
+        return photoList.size();
     }
 
 

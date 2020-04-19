@@ -55,10 +55,10 @@ public class PersonDBHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_PERSON_NAME, photo.getName());
-        values.put(COLUMN_PERSON_AGE, photo.getAge());
-        values.put(COLUMN_PERSON_OCCUPATION, photo.getOccupation());
-        values.put(COLUMN_PERSON_IMAGE, photo.getImage());
+        values.put(COLUMN_PERSON_NAME, photo.getTitle());
+        values.put(COLUMN_PERSON_AGE, photo.getDescription());
+        values.put(COLUMN_PERSON_OCCUPATION, photo.getDescription());
+        values.put(COLUMN_PERSON_IMAGE, photo.getImageUrl());
 
         // insert
         db.insert(TABLE_NAME,null, values);
@@ -86,10 +86,10 @@ public class PersonDBHelper extends SQLiteOpenHelper {
                 photo = new Photo();
 
                 photo.setId(cursor.getLong(cursor.getColumnIndex(COLUMN_ID)));
-                photo.setName(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_NAME)));
-                photo.setAge(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_AGE)));
-                photo.setOccupation(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_OCCUPATION)));
-                photo.setImage(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_IMAGE)));
+                photo.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_NAME)));
+                photo.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_AGE)));
+                //photo.setOccupation(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_OCCUPATION)));
+                photo.setImageUrl(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_IMAGE)));
                 photoLinkedList.add(photo);
             } while (cursor.moveToNext());
         }
@@ -108,10 +108,10 @@ public class PersonDBHelper extends SQLiteOpenHelper {
         if(cursor.getCount() > 0) {
             cursor.moveToFirst();
 
-            receivedPhoto.setName(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_NAME)));
-            receivedPhoto.setAge(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_AGE)));
-            receivedPhoto.setOccupation(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_OCCUPATION)));
-            receivedPhoto.setImage(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_IMAGE)));
+            receivedPhoto.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_NAME)));
+            receivedPhoto.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_AGE)));
+            //receivedPhoto.setOccupation(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_OCCUPATION)));
+            receivedPhoto.setImageUrl(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_IMAGE)));
         }
 
 
@@ -135,7 +135,8 @@ public class PersonDBHelper extends SQLiteOpenHelper {
     public void updatePersonRecord(long personId, Context context, Photo updatedperson) {
         SQLiteDatabase db = this.getWritableDatabase();
         //you can use the constants above instead of typing the column names
-        db.execSQL("UPDATE  "+TABLE_NAME+" SET name ='"+ updatedperson.getName() + "', age ='" + updatedperson.getAge()+ "', occupation ='"+ updatedperson.getOccupation() + "', image ='"+ updatedperson.getImage() + "'  WHERE _id='" + personId + "'");
+        //db.execSQL("UPDATE  "+TABLE_NAME+" SET name ='"+ updatedperson.getTitle() + "', age ='" + updatedperson.getDescription()+ "', occupation ='"+ updatedperson.getOccupation() + "', image ='"+ updatedperson.getImageUrl() + "'  WHERE _id='" + personId + "'");
+        db.execSQL("UPDATE  "+TABLE_NAME+" SET name ='"+ updatedperson.getTitle() + "', age ='" + updatedperson.getDescription()+ "', occupation ='"+ updatedperson.getDescription() + "', image ='"+ updatedperson.getImageUrl() + "'  WHERE _id='" + personId + "'");
         Toast.makeText(context, "Updated successfully.", Toast.LENGTH_SHORT).show();
 
 

@@ -12,30 +12,36 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Adicionar nova Foto"
-        android:textAlignment="center"
-        android:gravity="center_horizontal" />
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/photoTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Título" />
+        android:hint="Título"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/photoDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Descrição" />
+        android:hint="Descrição"
+        android:inputType="textPersonName" />
 
     <Button
         android:id="@+id/addNewUserButton"
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:text="Salvar"/>
+        android:text="Salvar" />
+
+    <Button
+        android:id="@+id/addNewPhotoButton"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:text="Capturar Foto" />
 
 </LinearLayout>

@@ -14,8 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-// TODO rename
-import info.codestart.androidsqlitedatabase.R;
+import info.codestart.trabalho01.R;
 import info.codestart.trabalho01.Utils.PersonAdapter;
 import info.codestart.trabalho01.Utils.PersonDBHelper;
 

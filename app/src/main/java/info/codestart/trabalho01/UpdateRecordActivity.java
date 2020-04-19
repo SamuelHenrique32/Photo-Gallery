@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import info.codestart.androidsqlitedatabase.R;
+import info.codestart.trabalho01.R;
 import info.codestart.trabalho01.Utils.PersonDBHelper;
 import info.codestart.trabalho01.model.Photo;
 
@@ -45,8 +45,8 @@ public class UpdateRecordActivity extends AppCompatActivity {
         /***populate user data before update***/
         Photo queriedPhoto = dbHelper.getPerson(receivedPersonId);
         //set field to this user data
-        mNameEditText.setText(queriedPhoto.getName());
-        mAgeEditText.setText(queriedPhoto.getOccupation());
+        mNameEditText.setText(queriedPhoto.getTitle());
+        mAgeEditText.setText(queriedPhoto.getDescription());
 //        mOccupationEditText.setText(queriedPhoto.getAge());
 //        mImageEditText.setText(queriedPhoto.getImage());
 
@@ -95,7 +95,7 @@ public class UpdateRecordActivity extends AppCompatActivity {
         }*/
 
         //create updated person
-        Photo updatedPhoto = new Photo(name, age, age, "image_url");
+        Photo updatedPhoto = new Photo(name, age, "image_url");
 
         //call dbhelper update
         dbHelper.updatePersonRecord(receivedPersonId, this, updatedPhoto);
