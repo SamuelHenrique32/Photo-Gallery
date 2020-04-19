@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import info.codestart.trabalho01.R;
-import info.codestart.trabalho01.Utils.PersonDBHelper;
+import info.codestart.trabalho01.Utils.PhotoDB;
 import info.codestart.trabalho01.model.Photo;
 
 public class AddRecordActivity extends AppCompatActivity {
@@ -20,7 +20,7 @@ public class AddRecordActivity extends AppCompatActivity {
     private EditText mImageEditText;
     private Button mAddBtn;
 
-    private PersonDBHelper dbHelper;
+    private PhotoDB dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class AddRecordActivity extends AppCompatActivity {
         String age = mAgeEditText.getText().toString().trim();
         String occupation = mOccupationEditText.getText().toString().trim();
         //String image = mImageEditText.getText().toString().trim();
-        dbHelper = new PersonDBHelper(this);
+        dbHelper = new PhotoDB(this);
 
         if(name.isEmpty()){
             //error name is empty

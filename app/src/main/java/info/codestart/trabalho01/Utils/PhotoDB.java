@@ -16,7 +16,7 @@ import info.codestart.trabalho01.model.Photo;
  * Created by Ronsoft on 9/16/2017.
  */
 
-public class PersonDBHelper extends SQLiteOpenHelper {
+public class PhotoDB extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "people.db";
     private static final int DATABASE_VERSION = 3 ;
@@ -28,7 +28,7 @@ public class PersonDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PERSON_IMAGE = "image";
 
 
-    public PersonDBHelper(Context context) {
+    public PhotoDB(Context context) {
         super(context, DATABASE_NAME , null, DATABASE_VERSION);
     }
 
@@ -123,7 +123,7 @@ public class PersonDBHelper extends SQLiteOpenHelper {
 
 
     /**delete record**/
-    public void deletePersonRecord(long id, Context context) {
+    public void deletePhotoRegister(long id, Context context) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.execSQL("DELETE FROM "+TABLE_NAME+" WHERE _id='"+id+"'");

@@ -3,27 +3,23 @@ package info.codestart.trabalho01;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+
 import info.codestart.trabalho01.R;
-import info.codestart.trabalho01.Utils.PersonAdapter;
-import info.codestart.trabalho01.Utils.PersonDBHelper;
+import info.codestart.trabalho01.Utils.PhotoAdapter;
+import info.codestart.trabalho01.Utils.PhotoDB;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private PersonDBHelper dbHelper;
-    private PersonAdapter adapter;
+    private PhotoDB dbHelper;
+    private PhotoAdapter adapter;
     private String filter = "";
 
     @Override
@@ -42,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populaterecyclerView(String filter){
-        dbHelper = new PersonDBHelper(this);
-        adapter = new PersonAdapter(dbHelper.peopleList(filter), this, recyclerView);
+        dbHelper = new PhotoDB(this);
+        adapter = new PhotoAdapter(dbHelper.peopleList(filter), this, recyclerView);
         recyclerView.setAdapter(adapter);
 
     }

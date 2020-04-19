@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import info.codestart.trabalho01.R;
-import info.codestart.trabalho01.Utils.PersonDBHelper;
+import info.codestart.trabalho01.Utils.PhotoDB;
 import info.codestart.trabalho01.model.Photo;
 
 public class UpdateRecordActivity extends AppCompatActivity {
@@ -20,7 +20,7 @@ public class UpdateRecordActivity extends AppCompatActivity {
     private EditText mImageEditText;
     private Button mUpdateBtn;
 
-    private PersonDBHelper dbHelper;
+    private PhotoDB dbHelper;
     private long receivedPersonId;
 
     @Override
@@ -33,7 +33,7 @@ public class UpdateRecordActivity extends AppCompatActivity {
         mAgeEditText = (EditText)findViewById(R.id.photoDescriptionUpdate);
         mUpdateBtn = (Button)findViewById(R.id.updateUserButton);
 
-        dbHelper = new PersonDBHelper(this);
+        dbHelper = new PhotoDB(this);
 
         try {
             //get intent to get person id
