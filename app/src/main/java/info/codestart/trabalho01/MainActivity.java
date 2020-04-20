@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goToAddUserActivity(){
-        Intent intent = new Intent(MainActivity.this, AddRecordActivity.class);
+        Intent intent = new Intent(MainActivity.this, AddRegisterActivity.class);
         startActivity(intent);
     }
 

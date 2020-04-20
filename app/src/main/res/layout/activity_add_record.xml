@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context="info.codestart.trabalho01.AddRecordActivity">
+    tools:context="info.codestart.trabalho01.AddRegisterActivity">
 
     <TextView
         android:id="@+id/title"
@@ -33,15 +33,15 @@
         android:inputType="textPersonName" />
 
     <Button
-        android:id="@+id/addNewUserButton"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:text="Salvar" />
-
-    <Button
         android:id="@+id/addNewPhotoButton"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:text="Capturar Foto" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:text="Salvar" />
 
 </LinearLayout>

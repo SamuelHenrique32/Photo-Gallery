@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="info.codestart.trabalho01.AddRecordActivity"
+            android:name="info.codestart.trabalho01.AddRegisterActivity"
             android:parentActivityName="info.codestart.trabalho01.MainActivity" />
         <activity android:name="info.codestart.trabalho01.UpdateRecordActivity"
             android:parentActivityName="info.codestart.trabalho01.MainActivity"/>
