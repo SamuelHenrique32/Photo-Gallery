@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context="info.codestart.androidsqlitedatabase.info.codestart.trabalho01.AddRecordActivity">
+    tools:context="info.codestart.trabalho01.AddRegisterActivity">
 
 
     <TextView
