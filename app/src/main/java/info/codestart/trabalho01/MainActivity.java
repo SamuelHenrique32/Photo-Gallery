@@ -1,4 +1,3 @@
-// TODO rename
 package info.codestart.trabalho01;
 
 import android.content.Intent;
@@ -9,44 +8,46 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
-import info.codestart.trabalho01.R;
 import info.codestart.trabalho01.Utils.PhotoAdapter;
 import info.codestart.trabalho01.Utils.PhotoDB;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
-    private PhotoDB dbHelper;
-    private PhotoAdapter adapter;
-    private String filter = "";
+    private RecyclerView.LayoutManager recyclerVLayoutManager;
+    private PhotoDB photoDB;
+    private PhotoAdapter photoAdapter;
+    private String currentFilter = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
         recyclerView.setHasFixedSize(true);
 
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerVLayoutManager = new LinearLayoutManager(this);
 
-        //populate recyclerview
-        populaterecyclerView(filter);
+        recyclerView.setLayoutManager(recyclerVLayoutManager);
+
+        addRowsToRecyclerView(currentFilter);
     }
 
-    private void populaterecyclerView(String filter){
-        dbHelper = new PhotoDB(this);
-        adapter = new PhotoAdapter(dbHelper.photoList(filter), this, recyclerView);
-        recyclerView.setAdapter(adapter);
+    private void addRowsToRecyclerView(String filter){
+        photoDB = new PhotoDB(this);
 
+        photoAdapter = new PhotoAdapter(photoDB.photoList(filter), this, recyclerView);
+
+        recyclerView.setAdapter(photoAdapter);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
+
         inflater.inflate(R.menu.home_menu, menu);
 
         return true;
@@ -54,17 +55,20 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
+        // Depending of the selected item
         switch (item.getItemId()) {
+
             case R.id.addMenu:
-                goToAddUserActivity();
+
+                goToAddPhotoActivity();
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void goToAddUserActivity(){
+    private void goToAddPhotoActivity(){
         Intent intent = new Intent(MainActivity.this, AddRegisterActivity.class);
         startActivity(intent);
     }
@@ -72,6 +76,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.notifyDataSetChanged();
+        photoAdapter.notifyDataSetChanged();
     }
 }
