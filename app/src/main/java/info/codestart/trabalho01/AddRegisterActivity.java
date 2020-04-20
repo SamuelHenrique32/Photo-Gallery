@@ -23,7 +23,7 @@ public class AddRegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_add_record);
+        setContentView(R.layout.activity_add_register);
 
         titleEditT = (EditText)findViewById(R.id.photoTitle);
         descriptionEditT = (EditText)findViewById(R.id.photoDescription);
