@@ -6,79 +6,69 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
-
 import java.util.LinkedList;
 import java.util.List;
-
 import info.codestart.trabalho01.model.Photo;
-
-/**
- * Created by Ronsoft on 9/16/2017.
- */
 
 public class PhotoDB extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "people.db";
-    private static final int DATABASE_VERSION = 3 ;
-    public static final String TABLE_NAME = "People";
+    public static final String DATABASE_NAME = "photos.db";
+    private static final int DATABASE_VERSION = 1 ;
+    public static final String TABLE_NAME = "Photos";
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_PERSON_NAME = "name";
-    public static final String COLUMN_PERSON_AGE = "age";
-    public static final String COLUMN_PERSON_OCCUPATION = "occupation";
-    public static final String COLUMN_PERSON_IMAGE = "image";
+    public static final String COLUMN_PHOTO_TITLE = "title";
+    public static final String COLUMN_PHOTO_DESCRIPTION = "description";
+    public static final String COLUMN_PHOTO_IMAGE_URL = "image";
 
 
-    public PhotoDB(Context context) {
-        super(context, DATABASE_NAME , null, DATABASE_VERSION);
+    public PhotoDB(Context currentContext) {
+        super(currentContext, DATABASE_NAME , null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(" CREATE TABLE " + TABLE_NAME + " (" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_PERSON_NAME + " TEXT NOT NULL, " +
-                COLUMN_PERSON_AGE + " NUMBER NOT NULL, " +
-                COLUMN_PERSON_OCCUPATION + " TEXT NOT NULL, " +
-                COLUMN_PERSON_IMAGE + " BLOB NOT NULL);"
+                COLUMN_PHOTO_TITLE + " TEXT NOT NULL, " +
+                COLUMN_PHOTO_DESCRIPTION + " TEXT NOT NULL, " +
+                COLUMN_PHOTO_IMAGE_URL + " BLOB NOT NULL);"
         );
-
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // you can implement here migration process
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-        this.onCreate(db);
+    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+        database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        this.onCreate(database);
     }
-    /**create record**/
-    public void saveNewPerson(Photo photo) {
+
+
+    public void saveNewPhoto(Photo photo) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_PERSON_NAME, photo.getTitle());
-        values.put(COLUMN_PERSON_AGE, photo.getDescription());
-        values.put(COLUMN_PERSON_OCCUPATION, photo.getDescription());
-        values.put(COLUMN_PERSON_IMAGE, photo.getImageUrl());
+        values.put(COLUMN_PHOTO_TITLE, photo.getTitle());
+        values.put(COLUMN_PHOTO_DESCRIPTION, photo.getDescription());
+        values.put(COLUMN_PHOTO_IMAGE_URL, photo.getImageUrl());
 
-        // insert
         db.insert(TABLE_NAME,null, values);
         db.close();
     }
 
-    /**Query records, give options to filter results**/
-    public List<Photo> peopleList(String filter) {
-        String query;
-        if(filter.equals("")){
-            //regular query
-            query = "SELECT  * FROM " + TABLE_NAME;
+    public List<Photo> photoList(String filterToApply) {
+        String dbQuery;
+
+        if(filterToApply.equals("")){
+            dbQuery = "SELECT  * FROM " + TABLE_NAME;
         }else{
-            //filter results by filter option provided
-            query = "SELECT  * FROM " + TABLE_NAME + " ORDER BY "+ filter;
+            dbQuery = "SELECT  * FROM " + TABLE_NAME + " ORDER BY "+ filterToApply;
         }
 
         List<Photo> photoLinkedList = new LinkedList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        Cursor cursor = database.rawQuery(dbQuery, null);
+
         Photo photo;
 
         if (cursor.moveToFirst()) {
@@ -86,63 +76,50 @@ public class PhotoDB extends SQLiteOpenHelper {
                 photo = new Photo();
 
                 photo.setId(cursor.getLong(cursor.getColumnIndex(COLUMN_ID)));
-                photo.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_NAME)));
-                photo.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_AGE)));
-                //photo.setOccupation(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_OCCUPATION)));
-                photo.setImageUrl(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_IMAGE)));
+                photo.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO_TITLE)));
+                photo.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO_DESCRIPTION)));
+                photo.setImageUrl(cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO_IMAGE_URL)));
                 photoLinkedList.add(photo);
             } while (cursor.moveToNext());
         }
 
-
         return photoLinkedList;
     }
 
-    /**Query only 1 record**/
-    public Photo getPerson(long id){
+    public Photo getPhoto(long photoId){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT  * FROM " + TABLE_NAME + " WHERE _id="+ id;
+
+        String query = "SELECT  * FROM " + TABLE_NAME + " WHERE _id="+ photoId;
+
         Cursor cursor = db.rawQuery(query, null);
 
         Photo receivedPhoto = new Photo();
+
         if(cursor.getCount() > 0) {
             cursor.moveToFirst();
 
-            receivedPhoto.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_NAME)));
-            receivedPhoto.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_AGE)));
-            //receivedPhoto.setOccupation(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_OCCUPATION)));
-            receivedPhoto.setImageUrl(cursor.getString(cursor.getColumnIndex(COLUMN_PERSON_IMAGE)));
+            receivedPhoto.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO_TITLE)));
+            receivedPhoto.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO_DESCRIPTION)));
+            receivedPhoto.setImageUrl(cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO_IMAGE_URL)));
         }
 
-
-
         return receivedPhoto;
-
-
     }
 
-
-    /**delete record**/
-    public void deletePhotoRegister(long id, Context context) {
+    public void deletePhotoRegister(long photoId, Context currentContext) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        db.execSQL("DELETE FROM "+TABLE_NAME+" WHERE _id='"+id+"'");
-        Toast.makeText(context, "Deleted successfully.", Toast.LENGTH_SHORT).show();
+        db.execSQL("DELETE FROM "+TABLE_NAME+" WHERE _id='"+photoId+"'");
+
+        Toast.makeText(currentContext, "Apagado com Sucesso", Toast.LENGTH_SHORT).show();
 
     }
 
-    /**update record**/
-    public void updatePersonRecord(long personId, Context context, Photo updatedperson) {
+    public void updatePhotoRegister(long photoId, Context currentContext, Photo updatedPhoto) {
         SQLiteDatabase db = this.getWritableDatabase();
-        //you can use the constants above instead of typing the column names
-        //db.execSQL("UPDATE  "+TABLE_NAME+" SET name ='"+ updatedperson.getTitle() + "', age ='" + updatedperson.getDescription()+ "', occupation ='"+ updatedperson.getOccupation() + "', image ='"+ updatedperson.getImageUrl() + "'  WHERE _id='" + personId + "'");
-        db.execSQL("UPDATE  "+TABLE_NAME+" SET name ='"+ updatedperson.getTitle() + "', age ='" + updatedperson.getDescription()+ "', occupation ='"+ updatedperson.getDescription() + "', image ='"+ updatedperson.getImageUrl() + "'  WHERE _id='" + personId + "'");
-        Toast.makeText(context, "Updated successfully.", Toast.LENGTH_SHORT).show();
 
+        db.execSQL("UPDATE  "+TABLE_NAME+" SET title ='"+ updatedPhoto.getTitle() + "', description ='" + updatedPhoto.getDescription()+ "', image ='"+ updatedPhoto.getImageUrl() + "'  WHERE _id='" + photoId + "'");
 
+        Toast.makeText(currentContext, "Atualizado com Sucesso", Toast.LENGTH_SHORT).show();
     }
-
-
-
-
 }

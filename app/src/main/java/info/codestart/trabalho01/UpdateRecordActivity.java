@@ -43,7 +43,7 @@ public class UpdateRecordActivity extends AppCompatActivity {
         }
 
         /***populate user data before update***/
-        Photo queriedPhoto = dbHelper.getPerson(receivedPersonId);
+        Photo queriedPhoto = dbHelper.getPhoto(receivedPersonId);
         //set field to this user data
         mNameEditText.setText(queriedPhoto.getTitle());
         mAgeEditText.setText(queriedPhoto.getDescription());
@@ -98,7 +98,7 @@ public class UpdateRecordActivity extends AppCompatActivity {
         Photo updatedPhoto = new Photo(name, age, "image_url");
 
         //call dbhelper update
-        dbHelper.updatePersonRecord(receivedPersonId, this, updatedPhoto);
+        dbHelper.updatePhotoRegister(receivedPersonId, this, updatedPhoto);
 
         //finally redirect back home
         // NOTE you can implement an sqlite callback then redirect on success delete

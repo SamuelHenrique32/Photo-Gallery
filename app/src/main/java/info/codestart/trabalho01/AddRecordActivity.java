@@ -73,7 +73,7 @@ public class AddRecordActivity extends AppCompatActivity {
 
         //create new person
         Photo photo = new Photo(name, occupation, "aaa");
-        dbHelper.saveNewPerson(photo);
+        dbHelper.saveNewPhoto(photo);
 
         //finally redirect back home
         // NOTE you can implement an sqlite callback then redirect on success delete

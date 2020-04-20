@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void populaterecyclerView(String filter){
         dbHelper = new PhotoDB(this);
-        adapter = new PhotoAdapter(dbHelper.peopleList(filter), this, recyclerView);
+        adapter = new PhotoAdapter(dbHelper.photoList(filter), this, recyclerView);
         recyclerView.setAdapter(adapter);
 
     }
