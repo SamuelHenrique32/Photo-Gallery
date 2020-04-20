@@ -59,7 +59,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
         
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         
-        View v = inflater.inflate(R.layout.single_row, parent, false);
+        View v = inflater.inflate(R.layout.register, parent, false);
         
         // Set the view's  parameters
         ViewHolder viewHolder = new ViewHolder(v);
