@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 import info.codestart.trabalho01.R;
-import info.codestart.trabalho01.UpdateRecordActivity;
+import info.codestart.trabalho01.UpdateRegisterActivity;
 import info.codestart.trabalho01.model.Photo;
 
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> {
@@ -120,7 +120,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
     }
 
     private void goToUpdateActivity(long photoId){
-        Intent updateIntent = new Intent(currentContext, UpdateRecordActivity.class);
+        Intent updateIntent = new Intent(currentContext, UpdateRegisterActivity.class);
         updateIntent.putExtra("USER_ID", photoId);
         currentContext.startActivity(updateIntent);
     }

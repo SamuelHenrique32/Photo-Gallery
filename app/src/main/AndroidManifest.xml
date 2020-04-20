@@ -21,7 +21,7 @@
         <activity
             android:name="info.codestart.trabalho01.AddRegisterActivity"
             android:parentActivityName="info.codestart.trabalho01.MainActivity" />
-        <activity android:name="info.codestart.trabalho01.UpdateRecordActivity"
+        <activity android:name="info.codestart.trabalho01.UpdateRegisterActivity"
             android:parentActivityName="info.codestart.trabalho01.MainActivity"/>
     </application>
 
