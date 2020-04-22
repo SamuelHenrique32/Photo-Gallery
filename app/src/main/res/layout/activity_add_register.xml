@@ -36,7 +36,8 @@
         android:id="@+id/addNewPhotoButton"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:text="Capturar Foto" />
+        android:text="Capturar Foto"
+        android:onClick="takePicture"/>
 
     <Button
         android:id="@+id/saveButton"
