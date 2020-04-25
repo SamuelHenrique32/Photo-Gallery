@@ -34,10 +34,12 @@ public class AddRegisterActivity extends AppCompatActivity {
     private PhotoDB photoDB;
     private File photoFile = null;
     private long photoID;
+    private boolean photoTaken;
 
     private final int CAMERA = 3;
     private final int IMAGE_GALERY = 1;
-    private boolean pictureTaken = false;
+
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,6 @@ public class AddRegisterActivity extends AppCompatActivity {
 
         titleEditT = (EditText)findViewById(R.id.photoTitle);
         descriptionEditT = (EditText)findViewById(R.id.photoDescription);
-        //photoEditT = (EditText)findViewById(R.id.);
         saveButton = (Button)findViewById(R.id.saveButton);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -57,51 +58,34 @@ public class AddRegisterActivity extends AppCompatActivity {
             }
         });
 
-        // Execute this code just if the picture was already taken
-        // -----------------------------------------------------------------------------------------
-        //if(pictureTaken) {
-            ImageView imageView = (ImageView) findViewById(R.id.image);
+        imageView = (ImageView) findViewById(R.id.image);
 
-            photoDB = new PhotoDB(this);
-
-            try {
-                photoID = getIntent().getLongExtra("USER_ID", 1);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            Photo photo = photoDB.getPhoto(photoID);
-
-            // Make it dynamic
-            Picasso.with(this).load("file:///storage/emulated/0/Pictures/JPG_20200424_180616.jpg").rotate(90).into(imageView);
-        //}
-        // -----------------------------------------------------------------------------------------
+        photoTaken = false;
     }
 
     private void savePhoto(){
+
         String title = titleEditT.getText().toString().trim();
 
-        String description = descriptionEditT.getText().toString().trim();
-
-        photoDB = new PhotoDB(this);
+        String imageUrl = titleEditT.getText().toString().trim();
 
         if(title.isEmpty()){
             Toast.makeText(this, "O título não pode ser vazio", Toast.LENGTH_SHORT).show();
+        } else if(!photoTaken) {
+            Toast.makeText(this, "Você não capturou uma foto", Toast.LENGTH_SHORT).show();
         }
+        else {
 
-        if(description.isEmpty()){
-            Toast.makeText(this, "A descrição não pode ser vazia", Toast.LENGTH_SHORT).show();
+            String description = descriptionEditT.getText().toString().trim();
+
+            photoDB = new PhotoDB(this);
+
+            Photo photo = new Photo(title, description, photoFile.getAbsolutePath());
+
+            photoDB.saveNewPhoto(photo);
+
+            goToHome();
         }
-
-        /*if(image.isEmpty()){
-            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
-        }*/
-
-        Photo photo = new Photo(title, description, "aaa");
-
-        photoDB.saveNewPhoto(photo);
-
-        goToHome();
     }
 
     private void goToHome(){
@@ -111,11 +95,7 @@ public class AddRegisterActivity extends AppCompatActivity {
     private File createFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 
-        // TODO Adapt dir
         File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-
-        //File dir = Environment.getExternalStoragePublicDirectory("/sdcard/Pictures");
-
 
         File image = new File(dir.getPath() + File.separator + "JPG_" + timeStamp + ".jpg");
 
@@ -127,12 +107,13 @@ public class AddRegisterActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK && requestCode == CAMERA) {
-            sendBroadcast(new Intent(
-                    Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                    Uri.fromFile(photoFile))
-            );
+            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(photoFile)));
+
+            Picasso.with(this).load("file://" + photoFile.getAbsolutePath()).rotate(90).into(imageView);
 
             Toast.makeText(this,  photoFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+
+            photoTaken = true;
         }
     }
 

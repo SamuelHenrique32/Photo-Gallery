@@ -83,7 +83,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(currentContext);
                 builder.setTitle("Escolha uma Opção");
-                builder.setMessage("Adicionar ou Deletar?");
+                builder.setMessage("Visualizar ou Apagar?");
                 builder.setPositiveButton("Visualizar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -31,7 +31,7 @@ public class PhotoDB extends SQLiteOpenHelper {
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_PHOTO_TITLE + " TEXT NOT NULL, " +
                 COLUMN_PHOTO_DESCRIPTION + " TEXT NOT NULL, " +
-                COLUMN_PHOTO_IMAGE_URL + " BLOB NOT NULL);"
+                COLUMN_PHOTO_IMAGE_URL + " TEXT NOT NULL);"
         );
     }
 

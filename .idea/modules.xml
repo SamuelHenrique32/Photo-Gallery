@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Android-SQLite-and-Recyclerview.iml" filepath="$PROJECT_DIR$/Android-SQLite-and-Recyclerview.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/Desktop-Trabalho01-GaleriaDeFotos-app.iml" filepath="$PROJECT_DIR$/app/Desktop-Trabalho01-GaleriaDeFotos-app.iml" group="Trabalho01-GaleriaDeFotos/app" />
       <module fileurl="file://$PROJECT_DIR$/Trabalho01-GaleriaDeFotos.iml" filepath="$PROJECT_DIR$/Trabalho01-GaleriaDeFotos.iml" group="Trabalho01-GaleriaDeFotos" />
-      <module fileurl="file://$PROJECT_DIR$/app/Trabalho01-GaleriaDeFotos-app.iml" filepath="$PROJECT_DIR$/app/Trabalho01-GaleriaDeFotos-app.iml" group="Trabalho01-GaleriaDeFotos/app" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Trabalho01-GaleriaDeFotos/app" />
     </modules>
   </component>
 </project>
