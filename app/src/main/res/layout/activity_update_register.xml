@@ -13,7 +13,7 @@
         android:id="@+id/titleUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Atualizar Foto"
+        android:text="Visualizar Foto"
         android:textAlignment="center"
         android:gravity="center_horizontal" />
 
@@ -38,5 +38,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Atualizar"/>
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="500dp" />
 
 </LinearLayout>

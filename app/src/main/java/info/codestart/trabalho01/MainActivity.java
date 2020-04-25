@@ -31,16 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-
-        recyclerView.setHasFixedSize(true);
-
-        recyclerVLayoutManager = new LinearLayoutManager(this);
-
-        recyclerView.setLayoutManager(recyclerVLayoutManager);
-
-        addRowsToRecyclerView(currentFilter);
-
         // Ask permission
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -66,6 +56,16 @@ public class MainActivity extends AppCompatActivity {
                         PERMISSION_REQUEST);
             }
         }
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
+        recyclerView.setHasFixedSize(true);
+
+        recyclerVLayoutManager = new LinearLayoutManager(this);
+
+        recyclerView.setLayoutManager(recyclerVLayoutManager);
+
+        addRowsToRecyclerView(currentFilter);
     }
 
     private void addRowsToRecyclerView(String filter){

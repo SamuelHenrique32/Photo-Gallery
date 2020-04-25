@@ -6,15 +6,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+import com.squareup.picasso.Picasso;
 import info.codestart.trabalho01.Utils.PhotoDB;
 import info.codestart.trabalho01.model.Photo;
+
+import static info.codestart.trabalho01.R.*;
 
 public class UpdateRegisterActivity extends AppCompatActivity {
 
     private EditText titleEditT;
     private EditText descriptionEditT;
     private Button updateButton;
+    public ImageView photoImageUrlView;
 
     private PhotoDB photoDB;
 
@@ -24,13 +29,15 @@ public class UpdateRegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_update_register);
+        setContentView(layout.activity_update_register);
 
-        titleEditT = (EditText)findViewById(R.id.photoTitleUpdate);
+        titleEditT = (EditText)findViewById(id.photoTitleUpdate);
 
-        descriptionEditT = (EditText)findViewById(R.id.photoDescriptionUpdate);
+        descriptionEditT = (EditText)findViewById(id.photoDescriptionUpdate);
 
-        updateButton = (Button)findViewById(R.id.updatePhotoButton);
+        updateButton = (Button)findViewById(id.updatePhotoButton);
+
+        photoImageUrlView = (ImageView) findViewById(id.image);
 
         photoDB = new PhotoDB(this);
 
@@ -52,6 +59,10 @@ public class UpdateRegisterActivity extends AppCompatActivity {
                 updatePhoto();
             }
         });
+
+        ImageView imageView = (ImageView) findViewById(id.image);
+
+        Picasso.with(this).load(photo.getImageUrl()).placeholder(mipmap.ic_launcher).into(imageView);
     }
 
     private void updatePhoto(){

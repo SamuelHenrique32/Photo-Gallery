@@ -84,7 +84,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
                 AlertDialog.Builder builder = new AlertDialog.Builder(currentContext);
                 builder.setTitle("Escolha uma Opção");
                 builder.setMessage("Adicionar ou Deletar?");
-                builder.setPositiveButton("Atualizar", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Visualizar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     goToUpdateActivity(photo.getId());
