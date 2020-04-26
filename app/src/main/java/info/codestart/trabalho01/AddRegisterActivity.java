@@ -69,9 +69,7 @@ public class AddRegisterActivity extends AppCompatActivity {
 
         String imageUrl = titleEditT.getText().toString().trim();
 
-        if(title.isEmpty()){
-            Toast.makeText(this, "O título não pode ser vazio", Toast.LENGTH_SHORT).show();
-        } else if(!photoTaken) {
+        if(!photoTaken) {
             Toast.makeText(this, "Você não capturou uma foto", Toast.LENGTH_SHORT).show();
         }
         else {

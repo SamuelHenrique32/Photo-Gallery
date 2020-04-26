@@ -70,13 +70,23 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder viewHolder, final int pos) {
 
         final Photo photo = photoList.get(pos);
-        
-        viewHolder.photoTitleTxtView.setText("Título: " + photo.getTitle());
-        
-        viewHolder.photoDescriptionTxtView.setText("Descrição: " + photo.getDescription());
-        
+
+        // If the photo has no title, show URL
+        if(photo.getTitle().length() == 0) {
+            viewHolder.photoTitleTxtView.setText("URL: " + photo.getImageUrl());
+        } else {
+            viewHolder.photoTitleTxtView.setText("Título: " + photo.getTitle());
+        }
+
+        // If the photo has no description, show a message
+        if(photo.getDescription().length() == 0) {
+            viewHolder.photoDescriptionTxtView.setText("Descrição: não há descrição");
+        } else{
+            viewHolder.photoDescriptionTxtView.setText("Descrição: " + photo.getDescription());
+        }
+
         // Load photo
-        Picasso.with(currentContext).load(photo.getImageUrl()).placeholder(R.mipmap.ic_launcher).into(viewHolder.photoImageUrlView);
+        Picasso.with(currentContext).load("file://" + photo.getImageUrl()).rotate(90).into(viewHolder.photoImageUrlView);
 
         viewHolder.currentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +131,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
 
     private void goToUpdateActivity(long photoId){
         Intent updateIntent = new Intent(currentContext, UpdateRegisterActivity.class);
-        updateIntent.putExtra("USER_ID", photoId);
+        updateIntent.putExtra("PHOTO_ID", photoId);
         currentContext.startActivity(updateIntent);
     }
 

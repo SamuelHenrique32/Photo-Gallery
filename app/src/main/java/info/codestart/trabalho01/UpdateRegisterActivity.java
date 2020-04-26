@@ -22,6 +22,7 @@ public class UpdateRegisterActivity extends AppCompatActivity {
     public ImageView photoImageUrlView;
 
     private PhotoDB photoDB;
+    private Photo photo;
 
     private long photoID;
 
@@ -42,12 +43,12 @@ public class UpdateRegisterActivity extends AppCompatActivity {
         photoDB = new PhotoDB(this);
 
         try {
-            photoID = getIntent().getLongExtra("USER_ID", 1);
+            photoID = getIntent().getLongExtra("PHOTO_ID", 1);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        Photo photo = photoDB.getPhoto(photoID);
+        photo = photoDB.getPhoto(photoID);
 
         titleEditT.setText(photo.getTitle());
 
@@ -62,7 +63,7 @@ public class UpdateRegisterActivity extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById(id.image);
 
-        Picasso.with(this).load(photo.getImageUrl()).placeholder(mipmap.ic_launcher).into(imageView);
+        Picasso.with(this).load("file://" + photo.getImageUrl()).rotate(90).into(imageView);
     }
 
     private void updatePhoto(){
@@ -82,7 +83,7 @@ public class UpdateRegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
         }*/
 
-        Photo updatedPhoto = new Photo(title, description, "image_url");
+        Photo updatedPhoto = new Photo(title, description, photo.getImageUrl());
 
         photoDB.updatePhotoRegister(photoID, this, updatedPhoto);
 
