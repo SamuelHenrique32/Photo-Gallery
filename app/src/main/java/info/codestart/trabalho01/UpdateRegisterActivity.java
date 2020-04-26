@@ -25,6 +25,9 @@ public class UpdateRegisterActivity extends AppCompatActivity {
     private EditText titleEditT;
 
     private TextView descriptionViewT;
+    private AlertDialog descriptionAlertT;
+    private EditText descriptionEditT;
+
     private Button updateButton;
     public ImageView photoImageUrlView;
 
@@ -39,6 +42,7 @@ public class UpdateRegisterActivity extends AppCompatActivity {
 
         setContentView(layout.activity_update_register);
 
+        // Title --------------------------------------------------------------------------------------------------
         titleViewT = (TextView)findViewById(id.title);
         titleAlertT = new AlertDialog.Builder(this).create();
         titleEditT = new EditText(this);
@@ -59,8 +63,30 @@ public class UpdateRegisterActivity extends AppCompatActivity {
                 titleAlertT.show();
             }
         });
+        // Title --------------------------------------------------------------------------------------------------
 
+        // Description --------------------------------------------------------------------------------------------------
         descriptionViewT = (TextView)findViewById(id.description);
+        descriptionAlertT = new AlertDialog.Builder(this).create();
+        descriptionEditT = new EditText(this);
+        descriptionAlertT.setTitle("Editar Descrição ");
+        descriptionAlertT.setView(descriptionEditT);
+
+        descriptionAlertT.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                descriptionViewT.setText("Descrição: " + descriptionEditT.getText());
+            }
+        });
+
+        descriptionViewT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                descriptionEditT.setText(descriptionViewT.getText().subSequence(11,descriptionViewT.getText().length()));
+                descriptionAlertT.show();
+            }
+        });
+        // Description --------------------------------------------------------------------------------------------------
 
         updateButton = (Button)findViewById(id.updatePhotoButton);
 
@@ -87,7 +113,7 @@ public class UpdateRegisterActivity extends AppCompatActivity {
         if(photo.getDescription().length() == 0) {
             descriptionViewT.setText("Descrição: não há descrição" + photo.getDescription());
         } else{
-            descriptionViewT.setText("Descrição: " + photo.getDescription());
+            //descriptionViewT.setText("Descrição: " + photo.getDescription());
         }
 
         updateButton.setOnClickListener(new View.OnClickListener() {
