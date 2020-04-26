@@ -1,23 +1,30 @@
 package info.codestart.trabalho01;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import info.codestart.trabalho01.Utils.PhotoDB;
 import info.codestart.trabalho01.model.Photo;
 
+import static android.content.DialogInterface.BUTTON_POSITIVE;
 import static info.codestart.trabalho01.R.*;
 
 public class UpdateRegisterActivity extends AppCompatActivity {
 
+    private TextView titleViewT;
+    private AlertDialog titleAlertT;
     private EditText titleEditT;
-    private EditText descriptionEditT;
+
+    private TextView descriptionViewT;
     private Button updateButton;
     public ImageView photoImageUrlView;
 
@@ -32,9 +39,28 @@ public class UpdateRegisterActivity extends AppCompatActivity {
 
         setContentView(layout.activity_update_register);
 
-        titleEditT = (EditText)findViewById(id.photoTitleUpdate);
+        titleViewT = (TextView)findViewById(id.title);
+        titleAlertT = new AlertDialog.Builder(this).create();
+        titleEditT = new EditText(this);
+        titleAlertT.setTitle("Editar Título ");
+        titleAlertT.setView(titleEditT);
+        titleAlertT.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                titleViewT.setText("Título: " + titleEditT.getText());
+            }
+        });
 
-        descriptionEditT = (EditText)findViewById(id.photoDescriptionUpdate);
+        titleViewT.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                titleEditT.setText(titleViewT.getText().subSequence(8,titleViewT.getText().length()));
+                titleAlertT.show();
+            }
+        });
+
+        descriptionViewT = (TextView)findViewById(id.description);
 
         updateButton = (Button)findViewById(id.updatePhotoButton);
 
@@ -50,9 +76,19 @@ public class UpdateRegisterActivity extends AppCompatActivity {
 
         photo = photoDB.getPhoto(photoID);
 
-        titleEditT.setText(photo.getTitle());
+        if(photo.getTitle().length() == 0) {
+            titleViewT.setText("URL: " + photo.getImageUrl());
 
-        descriptionEditT.setText(photo.getDescription());
+            Toast.makeText(this, "O título não foi definido, mostrando URL", Toast.LENGTH_LONG).show();
+        } else {
+            titleViewT.setText("Título: " + photo.getTitle());
+        }
+
+        if(photo.getDescription().length() == 0) {
+            descriptionViewT.setText("Descrição: não há descrição" + photo.getDescription());
+        } else{
+            descriptionViewT.setText("Descrição: " + photo.getDescription());
+        }
 
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,28 +103,15 @@ public class UpdateRegisterActivity extends AppCompatActivity {
     }
 
     private void updatePhoto(){
-        String title = titleEditT.getText().toString().trim();
+        String title = titleViewT.getText().toString().substring(8, titleViewT.getText().toString().length()).trim();
 
-        String description = descriptionEditT.getText().toString().trim();
-
-        if(title.isEmpty()){
-            Toast.makeText(this, "O título não pode ser vazio", Toast.LENGTH_SHORT).show();
-        }
-
-        if(description.isEmpty()){
-            Toast.makeText(this, "A descrição não pode ser vazia", Toast.LENGTH_SHORT).show();
-        }
-
-        /*if(image.isEmpty()){
-            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
-        }*/
+        String description = descriptionViewT.getText().toString().trim();
 
         Photo updatedPhoto = new Photo(title, description, photo.getImageUrl());
 
         photoDB.updatePhotoRegister(photoID, this, updatedPhoto);
 
         goToHome();
-
     }
 
     private void goToHome() {

@@ -8,7 +8,6 @@
     android:padding="10dp"
     tools:context="info.codestart.trabalho01.AddRegisterActivity">
 
-
     <TextView
         android:id="@+id/titleUpdate"
         android:layout_width="match_parent"
@@ -17,31 +16,36 @@
         android:textAlignment="center"
         android:gravity="center_horizontal" />
 
-    <EditText
-        android:id="@+id/photoTitleUpdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Título" />
+    <TextView
+        android:id="@+id/title"
+        android:textColor="@color/colorPrimary"
+        android:text="Título"
+        android:textSize="32dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/photoDescriptionUpdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Descrição" />
+    <TextView
+        android:id="@+id/description"
+        android:textColor="@color/colorPrimary"
+        android:text="Descrição"
+        android:textSize="30dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/updatePhotoButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="Atualizar"/>
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="500dp" />
+        android:layout_height="450dp" />
 
 </LinearLayout>
