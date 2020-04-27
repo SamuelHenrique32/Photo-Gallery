@@ -42,8 +42,6 @@ public class UpdateRegisterActivity extends AppCompatActivity {
 
         setContentView(layout.activity_update_register);
 
-
-
         updateButton = (Button)findViewById(id.updatePhotoButton);
 
         photoImageUrlView = (ImageView) findViewById(id.image);
@@ -109,6 +107,13 @@ public class UpdateRegisterActivity extends AppCompatActivity {
 
         // Description --------------------------------------------------------------------------------------------------
         descriptionViewT = (TextView)findViewById(id.description);
+
+        if(photo.getDescription().length() == 0) {
+            descriptionViewT.setText("Descrição: não há descrição" + photo.getDescription());
+        } else{
+            descriptionViewT.setText("Descrição: " + photo.getDescription());
+        }
+
         descriptionAlertT = new AlertDialog.Builder(this).create();
         descriptionEditT = new EditText(this);
         descriptionAlertT.setTitle("Editar Descrição ");
@@ -117,18 +122,18 @@ public class UpdateRegisterActivity extends AppCompatActivity {
         descriptionAlertT.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                descriptionViewT.setText(descriptionEditT.getText());
+                descriptionViewT.setText("Descrição: " + descriptionEditT.getText());
             }
         });
-
-        Toast.makeText(this, descriptionViewT.getText(), Toast.LENGTH_LONG).show();
 
         descriptionViewT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                descriptionEditT.setText(descriptionViewT.getText());
-
-
+                if(photo.getDescription().length() == 0) {
+                    descriptionEditT.setText(photo.getDescription());
+                } else {
+                    descriptionEditT.setText(descriptionViewT.getText().subSequence(11,descriptionViewT.getText().length()));
+                }
 
                 descriptionAlertT.show();
             }
@@ -139,7 +144,7 @@ public class UpdateRegisterActivity extends AppCompatActivity {
     private void updatePhoto(){
         String title = titleViewT.getText().toString().substring(8, titleViewT.getText().toString().length()).trim();
 
-        String description = descriptionViewT.getText().toString().trim();
+        String description = descriptionViewT.getText().toString().substring(11, descriptionViewT.getText().length()).trim();
 
         Photo updatedPhoto = new Photo(title, description, photo.getImageUrl());
 
