@@ -42,51 +42,7 @@ public class UpdateRegisterActivity extends AppCompatActivity {
 
         setContentView(layout.activity_update_register);
 
-        // Title --------------------------------------------------------------------------------------------------
-        titleViewT = (TextView)findViewById(id.title);
-        titleAlertT = new AlertDialog.Builder(this).create();
-        titleEditT = new EditText(this);
-        titleAlertT.setTitle("Editar Título ");
-        titleAlertT.setView(titleEditT);
-        titleAlertT.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                titleViewT.setText("Título: " + titleEditT.getText());
-            }
-        });
 
-        titleViewT.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                titleEditT.setText(titleViewT.getText().subSequence(8,titleViewT.getText().length()));
-                titleAlertT.show();
-            }
-        });
-        // Title --------------------------------------------------------------------------------------------------
-
-        // Description --------------------------------------------------------------------------------------------------
-        descriptionViewT = (TextView)findViewById(id.description);
-        descriptionAlertT = new AlertDialog.Builder(this).create();
-        descriptionEditT = new EditText(this);
-        descriptionAlertT.setTitle("Editar Descrição ");
-        descriptionAlertT.setView(descriptionEditT);
-
-        descriptionAlertT.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                descriptionViewT.setText("Descrição: " + descriptionEditT.getText());
-            }
-        });
-
-        descriptionViewT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                descriptionEditT.setText(descriptionViewT.getText().subSequence(11,descriptionViewT.getText().length()));
-                descriptionAlertT.show();
-            }
-        });
-        // Description --------------------------------------------------------------------------------------------------
 
         updateButton = (Button)findViewById(id.updatePhotoButton);
 
@@ -102,20 +58,6 @@ public class UpdateRegisterActivity extends AppCompatActivity {
 
         photo = photoDB.getPhoto(photoID);
 
-        if(photo.getTitle().length() == 0) {
-            titleViewT.setText("URL: " + photo.getImageUrl());
-
-            Toast.makeText(this, "O título não foi definido, mostrando URL", Toast.LENGTH_LONG).show();
-        } else {
-            titleViewT.setText("Título: " + photo.getTitle());
-        }
-
-        if(photo.getDescription().length() == 0) {
-            descriptionViewT.setText("Descrição: não há descrição" + photo.getDescription());
-        } else{
-            //descriptionViewT.setText("Descrição: " + photo.getDescription());
-        }
-
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,6 +68,72 @@ public class UpdateRegisterActivity extends AppCompatActivity {
         ImageView imageView = (ImageView) findViewById(id.image);
 
         Picasso.with(this).load("file://" + photo.getImageUrl()).rotate(90).into(imageView);
+
+        // Title --------------------------------------------------------------------------------------------------
+
+        titleViewT = (TextView)findViewById(id.title);
+
+        if(photo.getTitle().length() == 0) {
+            titleViewT.setText("URL: " + photo.getImageUrl());
+
+            Toast.makeText(this, "O título não foi definido, mostrando URL", Toast.LENGTH_LONG).show();
+        } else {
+            titleViewT.setText("Título: " + photo.getTitle());
+        }
+
+        titleAlertT = new AlertDialog.Builder(this).create();
+        titleEditT = new EditText(this);
+        titleAlertT.setTitle("Editar Título ");
+        titleAlertT.setView(titleEditT);
+        titleAlertT.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                titleViewT.setText("Título: " + titleEditT.getText());
+            }
+        });
+
+        titleViewT.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if(photo.getTitle().length() == 0) {
+                    titleEditT.setText(photo.getTitle());
+                } else {
+                    titleEditT.setText(titleViewT.getText().subSequence(8,titleViewT.getText().length()));
+                }
+
+                titleAlertT.show();
+            }
+        });
+        // Title --------------------------------------------------------------------------------------------------
+
+        // Description --------------------------------------------------------------------------------------------------
+        descriptionViewT = (TextView)findViewById(id.description);
+        descriptionAlertT = new AlertDialog.Builder(this).create();
+        descriptionEditT = new EditText(this);
+        descriptionAlertT.setTitle("Editar Descrição ");
+        descriptionAlertT.setView(descriptionEditT);
+
+        descriptionAlertT.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                descriptionViewT.setText(descriptionEditT.getText());
+            }
+        });
+
+        Toast.makeText(this, descriptionViewT.getText(), Toast.LENGTH_LONG).show();
+
+        descriptionViewT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                descriptionEditT.setText(descriptionViewT.getText());
+
+
+
+                descriptionAlertT.show();
+            }
+        });
+        // Description --------------------------------------------------------------------------------------------------
     }
 
     private void updatePhoto(){

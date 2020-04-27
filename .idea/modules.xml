@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Photo-Gallery.iml" filepath="$PROJECT_DIR$/Photo-Gallery.iml" group="Photo-Gallery" />
+      <module fileurl="file://$PROJECT_DIR$/app/Photo-Gallery-app.iml" filepath="$PROJECT_DIR$/app/Photo-Gallery-app.iml" group="Photo-Gallery/app" />
       <module fileurl="file://$PROJECT_DIR$/Trabalho01-GaleriaDeFotos.iml" filepath="$PROJECT_DIR$/Trabalho01-GaleriaDeFotos.iml" group="Trabalho01-GaleriaDeFotos" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Trabalho01-GaleriaDeFotos/app" />
     </modules>
