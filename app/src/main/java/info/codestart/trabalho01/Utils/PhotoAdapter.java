@@ -88,7 +88,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
         }
 
         // Load photo
-        Picasso.with(currentContext).load("file://" + photo.getImageUrl()).rotate(90).into(viewHolder.photoImageUrlView);
+        Picasso.with(currentContext).load("file://" + photo.getImageUrl()).rotate(90).resize(100,100).into(viewHolder.photoImageUrlView);
 
         viewHolder.currentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
