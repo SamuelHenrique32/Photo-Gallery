@@ -107,11 +107,11 @@ public class PhotoDB extends SQLiteOpenHelper {
     }
 
     public void deletePhotoRegister(long photoId, Context currentContext) {
+
+        // Delete from database (the file is deleted from storage in PhotoAdapter module)
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.execSQL("DELETE FROM "+TABLE_NAME+" WHERE _id='"+photoId+"'");
-
-        Toast.makeText(currentContext, "Apagado com Sucesso", Toast.LENGTH_SHORT).show();
 
     }
 

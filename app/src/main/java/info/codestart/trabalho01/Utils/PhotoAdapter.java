@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.squareup.picasso.Picasso;
+import java.io.File;
 import java.util.List;
 import info.codestart.trabalho01.R;
 import info.codestart.trabalho01.UpdateRegisterActivity;
@@ -103,19 +105,31 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
                 builder.setNeutralButton("Apagar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        PhotoDB photoDB = new PhotoDB(currentContext);
 
-                        photoDB.deletePhotoRegister(photo.getId(), currentContext);
+                        // Get reference to the picture in storage
+                        File photoFile = new File(photo.getImageUrl());
 
-                        photoList.remove(pos);
+                        // If the file was successful deleted, it's possible to delete from database and from RecyclerView
+                        if(photoFile.delete()) {
 
-                        recyclerView.removeViewAt(pos);
+                            // Delete from database
+                            PhotoDB photoDB = new PhotoDB(currentContext);
 
-                        notifyItemRemoved(pos);
+                            photoDB.deletePhotoRegister(photo.getId(), currentContext);
 
-                        notifyItemRangeChanged(pos, photoList.size());
+                            photoList.remove(pos);
 
-                        notifyDataSetChanged();
+                            // Delete from RecyclerView
+                            recyclerView.removeViewAt(pos);
+
+                            notifyItemRemoved(pos);
+
+                            notifyItemRangeChanged(pos, photoList.size());
+
+                            notifyDataSetChanged();
+
+                            Toast.makeText(currentContext, "Apagado com Sucesso", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
                 builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -130,8 +144,11 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
     }
 
     private void goToUpdateActivity(long photoId){
+
         Intent updateIntent = new Intent(currentContext, UpdateRegisterActivity.class);
+
         updateIntent.putExtra("PHOTO_ID", photoId);
+
         currentContext.startActivity(updateIntent);
     }
 
